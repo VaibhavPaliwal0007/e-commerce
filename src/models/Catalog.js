@@ -8,18 +8,17 @@ const catalogSchema = new mongoose.Schema({
 
     products: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product",
-        },
-    ],
-
-    tokens: [
-        {
-            token: {
+            name:{
                 type: String,
                 required: true,
+
             },
-        },
+
+            price: {
+                type: Number,
+                required: true,
+            },
+        }
     ],
 });
 
