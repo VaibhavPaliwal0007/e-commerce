@@ -25,16 +25,18 @@ const orderSchema = new mongoose.Schema({
             },
         }
     ],
-
-    tokens: [
-        {
-            token: {
-                type: String,
-                required: true,
-            },
-        },
-    ],
 });
+
+orderSchema.methods.toJSON = function () {
+    const order = this;
+
+    const orderObject = order.toObject();
+
+    delete orderObject.__v;
+    delete orderObject.__id;
+    
+    return orderObject;
+}
 
 const Order = mongoose.model("Order", orderSchema);
 

@@ -73,6 +73,16 @@ buyerSchema.statics.findByCredentials = async function (email, password) {
     }
 };
 
+buyerSchema.methods.toJSON = function () {
+    const user = this.toObject();
+
+    delete user.password;
+    delete user.__id;
+    delete user.tokens;
+    delete user.__v;
+    return user;
+};
+
 buyerSchema.pre("save", async function (next) {
     const buyer = this;
 

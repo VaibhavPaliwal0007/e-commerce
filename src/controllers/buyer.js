@@ -41,7 +41,7 @@ const createOrder = async (req, res) => {
     try {
         const sellerId = req.params.sellerId;
         const buyerId = req.user._id;
-        const order = req.body;
+        const order = req.body.items;
 
         if (!sellerId) {
             return res.status(400).send("Seller id is required");
@@ -54,7 +54,7 @@ const createOrder = async (req, res) => {
         }
 
         for (let i = 0; i < order.length; i++) {
-            const item = catalog.items.find(
+            const item = catalog.products.find(
                 (item) => item.name === order[i].name
             );
 

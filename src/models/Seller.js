@@ -59,6 +59,17 @@ const sellerSchema = new mongoose.Schema({
 
 sellerSchema.methods.generateAuthToken = generateToken();
 
+sellerSchema.methods.toJSON = function () {
+    const seller = this;
+    const sellerObject = seller.toObject();
+
+    delete sellerObject.password;
+    delete sellerObject._id;
+    delete sellerObject.tokens;
+
+    return sellerObject;
+};
+
 sellerSchema.statics.findByCredentials = async function (email, password) {
     try {
         const user = await this.findOne({ email });

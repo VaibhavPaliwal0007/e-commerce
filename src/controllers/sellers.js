@@ -54,6 +54,25 @@ const getOrders = async (req, res) => {
     try {
         const orders = await Order.find({ seller: req.user._id });
 
+        for (let i = 0; i < orders.length; i++) {
+            await orders[i].populate("buyer", {
+                author: 0,
+                __id: 0,
+                __v: 0,
+                tokens: 0,
+                password: 0,
+            });
+
+            await orders[i].populate("seller", {
+                author: 0,
+                _id: 0,
+                __v: 0,
+                catalog: 0,
+                tokens: 0,
+                password: 0,
+            });
+        }
+
         if (!orders) {
             return res.status(404).send({ error: "Orders not found" });
         }

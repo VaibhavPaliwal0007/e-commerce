@@ -22,6 +22,15 @@ const catalogSchema = new mongoose.Schema({
     ],
 });
 
+catalogSchema.methods.toJSON = function () {
+    const catalog = this;
+    const catalogObject = catalog.toObject();
+
+    delete catalogObject.owner;
+    
+    return catalogObject;
+};
+
 const Catalog = mongoose.model("Catalog", catalogSchema);
 
 module.exports = Catalog;
