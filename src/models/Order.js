@@ -11,11 +11,19 @@ const orderSchema = new mongoose.Schema({
         ref: "Seller",
     },
 
-    products: [
+    order: [
         {
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Product",
-        },
+            name:{
+                type: String,
+                required: true,
+
+            },
+
+            price: {
+                type: Number,
+                required: true,
+            },
+        }
     ],
 
     tokens: [
