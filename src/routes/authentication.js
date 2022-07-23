@@ -7,7 +7,7 @@ const authRouter = new express.Router();
 
 authRouter.post('/register', register);
 authRouter.post('/login', auth, login);
-authRouter.post('/update-credentials', auth, updateCredentials);
+authRouter.patch('/update-credentials', auth, updateCredentials);
 authRouter.post('/logout', auth, logout);
 
 module.exports = authRouter;
