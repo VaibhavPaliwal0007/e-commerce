@@ -1,5 +1,5 @@
-const Buyer = require('../models/Buyer');
-const Seller = require('../models/Seller');
+const Buyer = require("../models/Buyer");
+const Seller = require("../models/Seller");
 
 const jwt = require("jsonwebtoken");
 
@@ -7,11 +7,15 @@ const auth = async (req, res, next) => {
     try {
         let { role } = req.body;
 
+        if (role !== "buyer" && role !== "seller") {
+            return res.status(400).send("Invalid role");
+        }
+
         role = role.toLowerCase().trim();
 
-        const Model = (role === 'buyer') ? Buyer : Seller;
+        const Model = role === "buyer" ? Buyer : Seller;
         const token = req.header("Authorization").replace("Bearer ", "");
-        
+
         const decoded = jwt.verify(token, process.env.JWT_SECRET);
         const user = await Model.findOne({
             _id: decoded._id,

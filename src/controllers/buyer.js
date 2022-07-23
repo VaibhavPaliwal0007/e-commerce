@@ -7,10 +7,8 @@ const pageOptions = {
     page: 1,
 };
 
-//do pagination
 const getListOfSellers = async (req, res) => {
     try {
-        //do pagination
         const sellers = await Seller.find({})
             .skip(pageOptions.limit * (pageOptions.page - 1))
             .limit(pageOptions.limit);
@@ -22,4 +20,20 @@ const getListOfSellers = async (req, res) => {
     }
 };
 
-module.exports = { getListOfSellers };
+const getCatalogBySellerId = async (req, res) => {
+    try {
+        const sellerId = req.params.sellerId;
+
+        if (!sellerId) {
+            return res.status(400).send("Seller id is required");
+        }
+
+        const catalog = await Catalog.find({ owner: sellerId });
+        res.status(200).json({ catalog });
+    } catch (e) {
+        res.status(400).send(e);
+        console.log(e);
+    }
+};
+
+module.exports = { getListOfSellers, getCatalogBySellerId };
